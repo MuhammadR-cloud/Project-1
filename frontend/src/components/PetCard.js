@@ -6,7 +6,8 @@ function PetCard({ pet, onAdopt }) {
       <h3>{pet.name}</h3>
       <p>Type: {pet.type}</p>
       <p>Age: {pet.age}</p>
-      <p>Status: {pet.status.charAt(0).toUpperCase() + pet.status.slice(1)}</p> {/* Capitalize status */}
+      {/* Display capitalized status, logic uses lowercase */}
+      <p>Status: {pet.status.charAt(0).toUpperCase() + pet.status.slice(1)}</p>
       <p>Description: {pet.description}</p>
 
       <button
