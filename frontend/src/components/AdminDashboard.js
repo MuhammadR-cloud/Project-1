@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function AdminDashboard() {
+function AdminDashboard({ onLogout }) {
   const [requests, setRequests] = useState([]);
 
   // load requests when the page opens
@@ -42,6 +42,12 @@ function AdminDashboard() {
   return (
     <div style={{ textAlign: "center", marginTop: "30px" }}>
       <h2>Admin Dashboard</h2>
+      <button
+        onClick={onLogout}
+        style={{ marginBottom: "20px", padding: "8px 16px" }}
+      >
+        Logout
+      </button>
       <h3>All Adoption Requests</h3>
       {requests.length === 0 ? (
         <p>No requests found.</p>
