@@ -1,10 +1,7 @@
 package com.revature.project_1.Controller;
-
 import com.revature.project_1.Entity.User;
-import com.revature.project_1.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.revature.project_1.Service.UserService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -12,36 +9,36 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
-    // ✅ Register a new user
-    @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
-        return userRepository.save(user);
-    }
-
-    // ✅ Get all users (admin only, but no auth for now)
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    // ✅ Simple login (no JWT yet, just checking username & password)
-    @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        User foundUser = userRepository.findByUsername(user.getUsername());
-        if (foundUser != null && foundUser.getPassword().equals(user.getPassword())) {
-            return "Login successful as " + foundUser.getRole();
+        public UserController(UserService userService) {
+        this.userService = userService;
         }
-        return "Invalid username or password";
-    }
 
-    // ✅ Delete a user
-    @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Long id) {
-        userRepository.deleteById(id);
-        return "User deleted successfully!";
-    }
+        // Register a new user
+        @PostMapping("/register")
+        public User registerUser(@RequestBody User user) {
+            return userService.registerUser(user);
+        }
+
+        // Get all users (e.g., admin only)
+        @GetMapping
+        public List<User> getAllUsers() {
+            return userService.getAllUsers();
+        }
+
+        // Login check
+        @PostMapping("/login")
+        public User login(@RequestBody User user) {
+        return userService.login(user.getUsername(), user.getPassword());
+}
+
+
+        // Delete user by ID
+        @DeleteMapping("/{id}")
+        public String deleteUser(@PathVariable Long id) {
+            userService.deleteUser(id);
+            return "User deleted successfully!";
+        }
 }
 

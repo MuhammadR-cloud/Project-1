@@ -28,6 +28,10 @@ public class AdoptionRequestService {
         User user = userRepository.findById(userId).orElseThrow();
         Pet pet = petRepository.findById(petId).orElseThrow();
 
+         // Update pet status to PENDING immediately
+        pet.setStatus("PENDING");
+        petRepository.save(pet);
+        
         AdoptionRequest request = new AdoptionRequest();
         request.setUser(user);
         request.setPet(pet);
@@ -54,14 +58,20 @@ public class AdoptionRequestService {
         return "Adoption request approved!";
     }
 
-    // ✅ Deny adoption request
-    public String denyRequest(Long id) {
-        AdoptionRequest request = adoptionRequestRepository.findById(id).orElseThrow();
-        request.setStatus("DENIED");
+    
+    // Deny adoption request
+public String denyRequest(Long id) {
+    AdoptionRequest request = adoptionRequestRepository.findById(id).orElseThrow();
+    request.setStatus("DENIED");
 
-        adoptionRequestRepository.save(request);
-        return "Adoption request denied!";
-    }
+    Pet pet = request.getPet();
+    pet.setStatus("AVAILABLE"); // reset pet to available if request denied
+    petRepository.save(pet);
+
+    adoptionRequestRepository.save(request);
+    return "Adoption request denied!";
+}
+
 
     // ✅ Get only pending requests
     public List<AdoptionRequest> getPendingRequests() {

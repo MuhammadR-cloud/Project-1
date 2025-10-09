@@ -9,19 +9,20 @@ function PetList() {
   useEffect(() => {
     fetchPets(); // initial fetch
 
-    // Poll every 3 seconds for live updates after admin action
-    const interval = setInterval(fetchPets, 3000);
+    const interval = setInterval(fetchPets, 3000); // live updates
     return () => clearInterval(interval);
   }, []);
 
   const fetchPets = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/pets"); // fetch all pets
-      // normalize status to lowercase for button logic
-      setPets(response.data.map(p => ({
-        ...p,
-        status: p.status.toLowerCase()
-      })));
+      const response = await axios.get("http://localhost:8080/api/pets");
+
+      setPets(
+        response.data.map((p) => ({
+          ...p,
+          status: p.status.toLowerCase(), // normalize
+        }))
+      );
     } catch (err) {
       console.error("Error fetching pets", err);
       alert("Error fetching pets");
@@ -30,9 +31,16 @@ function PetList() {
 
   const handleAdopt = async (petId) => {
     try {
-      await requestAdoption(petId, 1); // userId = 1
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      if (!storedUser || !storedUser.id) {
+        alert("❌ You must be logged in to adopt a pet.");
+        return;
+      }
+      const userId = storedUser.id;
+
+      await requestAdoption(petId, userId); // send userId
       alert("Adoption request sent!");
-      fetchPets(); // refresh immediately to show pending status
+      fetchPets(); // refresh immediately
     } catch (error) {
       console.error("Error sending adoption request", error);
       alert("Error while sending adoption request");
