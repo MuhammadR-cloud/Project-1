@@ -23,15 +23,14 @@ public class AdoptionRequestService {
     @Autowired
     private PetRepository petRepository;
 
-    // ✅ Create a new adoption request
+    // Create a new adoption request
     public AdoptionRequest createRequest(Long userId, Long petId) {
         User user = userRepository.findById(userId).orElseThrow();
         Pet pet = petRepository.findById(petId).orElseThrow();
 
-         // Update pet status to PENDING immediately
         pet.setStatus("PENDING");
         petRepository.save(pet);
-        
+
         AdoptionRequest request = new AdoptionRequest();
         request.setUser(user);
         request.setPet(pet);
@@ -40,12 +39,12 @@ public class AdoptionRequestService {
         return adoptionRequestRepository.save(request);
     }
 
-    // ✅ Get all adoption requests
+    // Get all adoption requests
     public List<AdoptionRequest> getAllRequests() {
         return adoptionRequestRepository.findAll();
     }
 
-    // ✅ Approve adoption request
+    // Approve adoption request
     public String approveRequest(Long id) {
         AdoptionRequest request = adoptionRequestRepository.findById(id).orElseThrow();
         request.setStatus("APPROVED");

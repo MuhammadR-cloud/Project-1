@@ -15,15 +15,11 @@ public class UserService {
 
     // Register a new user
      public User registerUser(User user) {
-        // Check if email already exists
         if (userRepository.findByEmail(user.getEmail()) != null) {
             throw new RuntimeException("Email already registered!");
         }
 
-        // Set default role
         user.setRole("USER");
-
-        // Save user
         return userRepository.save(user);
     }
 
@@ -36,7 +32,7 @@ public class UserService {
     public User login(String username, String password) {
     User foundUser = userRepository.findByUsername(username);
     if (foundUser != null && foundUser.getPassword().equals(password)) {
-        return foundUser; //  Return full user with ID and role
+        return foundUser; 
     } else {
         throw new RuntimeException("Invalid username or password");
     }

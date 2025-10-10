@@ -12,11 +12,3 @@ export const requestAdoption = (petId) => {
 
   return axios.post(`${API_URL}/adoptions`, { petId, userId: user.id });
 };
-
-
-/*
-// Request adoption
-export const requestAdoption = (petId, userId = 1) =>
-  axios.post(`${API_URL}/adoptions/${userId}/${petId}`);
-
-*/

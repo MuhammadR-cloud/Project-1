@@ -9,16 +9,16 @@ function App() {
   const [role, setRole] = useState(null); // null = not logged in
   const [showSignup, setShowSignup] = useState(false); // toggle between login/signup
 
-  // ✅ Show signup page
+  // Show signup page
   if (showSignup && !role) {
     return <Signup onSignupSuccess={() => setShowSignup(false)} />;
   }
 
-  // ✅ Show login page if not logged in
+  // Show login page if not logged in
   if (!role) {
     return (
       <div>
-        <Login onLogin={setRole} />  {/* ✅ Matches prop in Login.js */}
+        <Login onLogin={setRole} />  {/* Matches prop in Login.js */}
         <p style={{ textAlign: "center" }}>
           Don’t have an account?{" "}
           <button
@@ -37,12 +37,12 @@ function App() {
     );
   }
 
-  // ✅ Show admin dashboard if logged in as admin
+  //  Show admin dashboard if logged in as admin
   if (role === "admin") {
     return <AdminDashboard />;
   }
 
-  // ✅ Show user dashboard (PetList) if logged in as user
+  //  Show user dashboard (PetList) if logged in as user
   return (
     <div className="App">
       <h1>🐾 Adopt A Pet</h1>

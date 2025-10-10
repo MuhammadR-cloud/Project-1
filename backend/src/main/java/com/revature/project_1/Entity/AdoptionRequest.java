@@ -17,8 +17,7 @@ public class AdoptionRequest {
     private Pet pet;
 
     private String status;
-
-    // Getters and setters
+    
     public Long getId() {
         return id;
     }

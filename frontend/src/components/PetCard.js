@@ -1,7 +1,6 @@
 import React from "react";
 
 function PetCard({ pet, onAdopt }) {
-  // Determine button label & disable state based on status
   let buttonText = "Adopt";
   let isDisabled = false;
 

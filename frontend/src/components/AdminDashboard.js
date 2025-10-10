@@ -1,4 +1,3 @@
-// src/components/AdminDashboard.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -11,7 +10,7 @@ function AdminDashboard() {
     fetchUsers();
   }, []);
 
-  // ✅ Fetch all adoption requests
+  // Fetch all adoption requests
   const fetchRequests = async () => {
     try {
       const res = await axios.get("http://localhost:8080/api/adoptions");
@@ -21,7 +20,7 @@ function AdminDashboard() {
     }
   };
 
-  // ✅ Fetch all users
+  // Fetch all users
   const fetchUsers = async () => {
     try {
       const res = await axios.get("http://localhost:8080/api/users");
@@ -31,7 +30,7 @@ function AdminDashboard() {
     }
   };
 
-  // ✅ Approve adoption
+  // Approve adoption
   const handleApprove = async (id) => {
     try {
       await axios.put(`http://localhost:8080/api/adoptions/${id}/approve`);
@@ -42,7 +41,7 @@ function AdminDashboard() {
     }
   };
 
-  // ✅ Deny adoption
+  // Deny adoption
   const handleDeny = async (id) => {
     try {
       await axios.put(`http://localhost:8080/api/adoptions/${id}/deny`);
@@ -53,7 +52,7 @@ function AdminDashboard() {
     }
   };
 
-  // ✅ Delete user
+  //  Delete user
   const handleDeleteUser = async (id) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
@@ -102,7 +101,7 @@ function AdminDashboard() {
         </table>
       )}
 
-      {/* 👥 User Management Section */}
+      {/*  User Management Section */}
       <h3>All Registered Users</h3>
       {users.length === 0 ? (
         <p>No users found.</p>
@@ -142,88 +141,3 @@ function AdminDashboard() {
 }
 
 export default AdminDashboard;
-
-
-
-/*
-
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-function AdminDashboard() {
-  const [requests, setRequests] = useState([]);
-
-  // load requests when the page opens
-  useEffect(() => {
-    fetchRequests();
-  }, []);
-
-  const fetchRequests = async () => {
-    try {
-      const res = await axios.get("http://localhost:8080/api/adoptions");
-      setRequests(res.data);
-    } catch (err) {
-      alert("Error loading adoption requests");
-    }
-  };
-
-  const handleApprove = async (id) => {
-    try {
-      await axios.put(`http://localhost:8080/api/adoptions/${id}/approve`);
-      alert("Request approved!");
-      fetchRequests(); // refresh the list
-    } catch (err) {
-      alert("Error approving request");
-    }
-  };
-
-  const handleDeny = async (id) => {
-    try {
-      await axios.put(`http://localhost:8080/api/adoptions/${id}/deny`);
-      alert("Request denied!");
-      fetchRequests();
-    } catch (err) {
-      alert("Error denying request");
-    }
-  };
-
-  return (
-    <div style={{ textAlign: "center", marginTop: "30px" }}>
-      <h2>Admin Dashboard</h2>
-      <h3>All Adoption Requests</h3>
-      {requests.length === 0 ? (
-        <p>No requests found.</p>
-      ) : (
-        <table border="1" style={{ margin: "0 auto" }}>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>User</th>
-              <th>Pet</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {requests.map((req) => (
-              <tr key={req.id}>
-                <td>{req.id}</td>
-                <td>{req.user?.username}</td>
-                <td>{req.pet?.name}</td>
-                <td>{req.status}</td>
-                <td>
-                  <button onClick={() => handleApprove(req.id)}>Approve</button>{" "}
-                  <button onClick={() => handleDeny(req.id)}>Deny</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
-  );
-}
-
-export default AdminDashboard;
-
-*/

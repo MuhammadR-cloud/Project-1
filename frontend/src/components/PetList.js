@@ -20,7 +20,7 @@ function PetList() {
       setPets(
         response.data.map((p) => ({
           ...p,
-          status: p.status.toLowerCase(), // normalize
+          status: p.status.toLowerCase(), 
         }))
       );
     } catch (err) {
@@ -40,7 +40,7 @@ function PetList() {
 
       await requestAdoption(petId, userId); // send userId
       alert("Adoption request sent!");
-      fetchPets(); // refresh immediately
+      fetchPets();
     } catch (error) {
       console.error("Error sending adoption request", error);
       alert("Error while sending adoption request");
